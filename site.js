@@ -36,11 +36,22 @@ function initialiseBoard(width, height) {
     board = Array.from(Array(width), () => new Array(height));
     for(var x = 0; x < gameProperties.width; x++){
         for(var y = 0; y < gameProperties.height; y++){
-            if(y <= 250){
+            if(x <= 250){
                 board[x][y] = 0;
             } else {
                 board[x][y] = 1
             }
+        }
+    }
+}
+
+function drawBoard() {
+    for(var x = 0; x < gameProperties.width; x++){
+        for(var y = 0; y < gameProperties.height; y++){
+            //sets colour to current pixel in selected palette
+            context.fillStyle = colours[gameProperties.colourPalette][board[x][y]];
+
+            context.fillRect(x, y, 1, 1);
         }
     }
 }
