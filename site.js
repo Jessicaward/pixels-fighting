@@ -4,16 +4,23 @@ var colours = [
     ["yellow", "green"]
 ];
 
-var canvas;
-var context;
 var gameProperties = {
     height: 500,
     width: 500,
     colourPalette: 0
-}
+};
+
+var board;
+var canvas;
+var context;
+
+document.addEventListener("DOMContentLoaded", function(){
+    init();
+});
 
 function init(){
     randomiseColourPalette();
+    initialiseBoard(gameProperties.width, gameProperties.height);
 
     var canvas = document.getElementById("gameCanvas");
 
@@ -22,6 +29,19 @@ function init(){
     }
     else{
         alert("Could not find canvas, this may be due to an unsupported browser.");
+    }
+}
+
+function initialiseBoard(width, height) {
+    board = Array.from(Array(width), () => new Array(height));
+    for(var x = 0; x < gameProperties.width; x++){
+        for(var y = 0; y < gameProperties.height; y++){
+            if(y <= 250){
+                board[x][y] = 0;
+            } else {
+                board[x][y] = 1
+            }
+        }
     }
 }
 
