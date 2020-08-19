@@ -29,7 +29,9 @@ function init(){
         context = canvas.getContext("2d");
         randomiseColourPalette();
         initialiseBoard(gameProperties.width, gameProperties.height);
-        setInterval(gameLoop, 0.1);
+        while(playing){
+            gameLoop();
+        }
     }
     else{
         alert("Could not find canvas, this may be due to an unsupported browser.");
@@ -60,10 +62,43 @@ function drawBoard() {
 }
 
 function gameLoop(){
-    if(playing){
-        drawBoard();
-        updateBoard();
+    drawBoard();
+    updateBoard();
+    var winner = checkForWinner();
+    if(winner !== undefined){
+        alert(winner + " won!");
+        playing = false;
     }
+}
+
+function checkForWinner(){
+    var first = board.some(
+        function(item){
+            return item.some(
+                function(inner){
+                    return inner == 0;
+                }
+            )
+        }
+    );
+
+    var second = board.some(
+        function(item){
+            return item.some(
+                function(inner){
+                    return inner == 1;
+                }
+            )
+        }
+    );
+
+    if(first && second){
+        return undefined;
+    }
+    else if(first) {
+        return colours[gameProperties.colourPalette][0];
+    }
+    return colours[gameProperties.colourPalette][1];
 }
 
 function updateBoard(){
