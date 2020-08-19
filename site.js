@@ -8,8 +8,8 @@ var colours = [
 ];
 
 var gameProperties = {
-    height: 500,
-    width: 500,
+    height: 250,
+    width: 250,
     colourPalette: 0
 };
 
@@ -54,7 +54,7 @@ function drawBoard() {
         for(var y = 0; y < gameProperties.height; y++){
             //sets colour to current pixel in selected palette
             context.fillStyle = colours[gameProperties.colourPalette][board[x][y]];
-            context.fillRect(x, y, 1, 1);
+            context.fillRect(x, y, 2, 2);
         }
     }
 }
