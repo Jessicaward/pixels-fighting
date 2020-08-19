@@ -16,6 +16,7 @@ var gameProperties = {
 var board;
 var canvas;
 var context;
+var playing = true;
 
 document.addEventListener("DOMContentLoaded", function(){
     init();
@@ -28,7 +29,7 @@ function init(){
         context = canvas.getContext("2d");
         randomiseColourPalette();
         initialiseBoard(gameProperties.width, gameProperties.height);
-        drawBoard();
+        setInterval(gameLoop, 1);
     }
     else{
         alert("Could not find canvas, this may be due to an unsupported browser.");
@@ -59,8 +60,19 @@ function drawBoard() {
     }
 }
 
+function gameLoop(){
+    if(playing){
+        drawBoard();
+        board[getRandomNumber(0, 500)][getRandomNumber(0, 500)] = 0;
+    }
+}
+
 function randomiseColourPalette(){
     gameProperties.colourPalette = getRandomNumber(0, colours.length);
+}
+
+function killswitch(){
+    playing = false;
 }
 
 function getRandomNumber(min, max) {
