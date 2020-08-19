@@ -29,7 +29,7 @@ function init(){
         context = canvas.getContext("2d");
         randomiseColourPalette();
         initialiseBoard(gameProperties.width, gameProperties.height);
-        setInterval(gameLoop, 1);
+        setInterval(gameLoop, 0.1);
     }
     else{
         alert("Could not find canvas, this may be due to an unsupported browser.");
@@ -54,7 +54,6 @@ function drawBoard() {
         for(var y = 0; y < gameProperties.height; y++){
             //sets colour to current pixel in selected palette
             context.fillStyle = colours[gameProperties.colourPalette][board[x][y]];
-
             context.fillRect(x, y, 1, 1);
         }
     }
@@ -63,6 +62,7 @@ function drawBoard() {
 function gameLoop(){
     if(playing){
         drawBoard();
+        updateBoard();
     }
 }
 
@@ -115,13 +115,40 @@ function updateBoard(){
                     break;
                 default:
                     //50% chance of death
+                    if(chanceResult(50)){
+                        invertPixel(x, y);
+                    }
+                    break;
             }
         }
     }
 }
 
 function getSurroundingEnemyPixelNumber(x, y){
-    
+    var numberOfEnemies = 0;
+    for(var row = x - 1; row <= x + 1; row++)
+    {
+        for(var col = y - 1; col <= y + 1; col++)
+        {
+            if(row < 0 || row >= gameProperties.width || col < 0 || col >= gameProperties.height) {
+                //neighbouring pixel is out of bounds 
+                continue;
+            }
+            else if (row == x && col == y){
+                //shouldn't count itself
+                continue;
+            }
+            else if(board[row][col] == board[x][y]){
+                //neighbouring pixel is friendly
+                continue;
+            }
+
+            //neighbouring pixel exists, and is an enemy.
+            numberOfEnemies++;
+        }
+    }
+
+    return numberOfEnemies;
 }
 
 function randomiseColourPalette(){
