@@ -1,7 +1,10 @@
 //todo: change these to matching hex values.
 var colours = [
-    ["red", "blue"],
-    ["yellow", "green"]
+    ["#70d6ff", "#ff70a6"],
+    ["#f25f5c", "#50514f"],
+    ["#641220", "#e01e37"],
+    ["#540d6e", "#ffd23f"],
+    ["#ffd166", "#06d6a0"]
 ];
 
 var gameProperties = {
@@ -19,13 +22,13 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 function init(){
-    randomiseColourPalette();
-    initialiseBoard(gameProperties.width, gameProperties.height);
-
     var canvas = document.getElementById("gameCanvas");
 
     if(canvas.getContext){
         context = canvas.getContext("2d");
+        randomiseColourPalette();
+        initialiseBoard(gameProperties.width, gameProperties.height);
+        drawBoard();
     }
     else{
         alert("Could not find canvas, this may be due to an unsupported browser.");
