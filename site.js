@@ -29,9 +29,7 @@ function init(){
         context = canvas.getContext("2d");
         randomiseColourPalette();
         initialiseBoard(gameProperties.width, gameProperties.height);
-        while(playing){
-            gameLoop();
-        }
+        setInterval(gameLoop, 1);
     }
     else{
         alert("Could not find canvas, this may be due to an unsupported browser.");
