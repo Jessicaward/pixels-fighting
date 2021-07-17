@@ -43,7 +43,7 @@ function initialiseBoard(width, height) {
             if(x <= 250){
                 board[x][y] = 0;
             } else {
-                board[x][y] = 1
+                board[x][y] = 1;
             }
         }
     }
@@ -69,34 +69,23 @@ function gameLoop(){
     }
 }
 
+function checkPresence(pixelValue){
+    board.some(
+        function(item){
+            return item.some(x => x == pixelValue);
+        }
+    );
+}
+
 function checkForWinner(){
-    var first = board.some(
-        function(item){
-            return item.some(
-                function(inner){
-                    return inner == 0;
-                }
-            )
-        }
-    );
-
-    var second = board.some(
-        function(item){
-            return item.some(
-                function(inner){
-                    return inner == 1;
-                }
-            )
-        }
-    );
-
+    var first = checkPresence(0);
+    var second = checkPresence(1);
+    
     if(first && second){
         return undefined;
     }
-    else if(first) {
-        return colours[gameProperties.colourPalette][0];
-    }
-    return colours[gameProperties.colourPalette][1];
+    
+    return colours[gameProperties.colourPalette][first ? 0 : 1];
 }
 
 function updateBoard(){
